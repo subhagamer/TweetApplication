@@ -1,0 +1,13 @@
+ngb-alert{
+    margin-top: -3.4em;
+    margin-left: 8em;
+    margin-bottom: -0.5em;
+    border-radius: 10em;
+}
+
+#err{
+    padding-left: 0.1%;
+    font-family: cursive;
+    font-size: small;
+    color: red;
+}

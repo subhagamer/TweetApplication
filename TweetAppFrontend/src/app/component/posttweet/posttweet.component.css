@@ -1,0 +1,65 @@
+#tweet{
+    border-radius: 15px;
+    border-top-left-radius: 15px;
+    margin-left: 8%;
+    margin-top: -8%;
+    padding-right: -15em;
+}
+
+#tweetmsg{
+    margin-left: 10%;
+    margin-top: -2%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+#profileImage {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    line-height: 150px;
+    margin: 20px 0;
+    float:center;
+
+}
+#imgmrgn{
+    margin-right: -4em;
+    margin-top: -1em;
+}
+#profTxt{
+    margin-top: -3.7em;
+    padding-left: 0.88em;
+    color: #fff;
+    user-select: none;
+}
+@media (max-width: 800px) {
+    #profileImage {
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 50%;
+        font-size: 30px;
+        color: #fff;
+        text-align: center;
+        line-height: 150px;
+        margin: 20px 0;
+        float:center;
+    }
+    #tweet{
+        border-radius: 15px;
+        border-top-left-radius: 15px;
+        margin-left: 19%;
+        margin-top: -18%;
+        padding-right: -15em;
+
+    }
+    #buttn{
+        margin-left: 20%;
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+    #tweet{
+        margin-top:-3em
+    }
+  }

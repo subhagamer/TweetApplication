@@ -1,0 +1,118 @@
+#tweet{
+    border-radius: 15px;
+    border-top-left-radius: 15px;
+}
+#posteddate{
+    padding-left: 5em;
+    margin-bottom: 5%;
+    margin-top: -3%;
+}
+#replytweet{
+    border-radius: 15px;
+    border-top-left-radius: 15px;
+    margin-right: -10em;
+}
+button{
+    margin-left: 0.5em;
+}
+
+#tag
+{
+    color: cornflowerblue;
+}
+
+#profTxt{
+    margin-top: -3.7em;
+    padding-left: 0.88em;
+    color: #fff;
+    
+}
+#profileImage {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    line-height: 150px;
+    margin: 20px 0;
+    float:center;
+}
+#profileImageOther {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    line-height: 150px;
+    margin: 20px 0;
+    float:center;
+    margin-top: 0em;
+    margin-left: 0.1em;
+    
+}
+#imgmrgnOther{
+    margin-right: -2em;
+}
+#imgmrgnRplyOther{
+    margin-left: 0.3em;
+}
+#profTxtOther{
+    margin-top: -3.7em;
+    padding-left: 1.1em;
+    color: #fff;
+
+}
+#imgmrgn{
+    margin-right: -2em;
+    margin-top: -2em;
+}
+#imgmrgnRply{
+    margin-right: -15em;
+    margin-top: -2em;
+    margin-left: 1em;
+}
+#headtxt{
+    margin-top:3em;
+    margin-bottom: -3em;
+    margin-left: 5em;
+}
+@media (max-width: 800px) {
+    #imgmrgn{
+        margin-right: -1.5em;
+        margin-bottom: -0.3em;
+        margin-top: -2em;
+    }
+    #imgmrgnRply{
+        margin-right: -2em;
+    }
+    #headtxt{
+        margin-top:5em;
+        margin-bottom: -7em;
+        margin-left: 19%;
+    }
+    #btnPos{
+        margin-left: 5.5%;
+        margin-top: -3%;
+        }
+} 
+@media (max-width: 670px) {
+    #imgmrgn{
+        margin-right: -0.6em;
+        margin-bottom: -0.3em;
+        margin-top: -2em;
+    }
+    #imgmrgnRply{
+        margin-right: 0.2em;
+    }
+    #headtxt{
+        margin-top:5em;
+        margin-bottom: -7em;
+        margin-left: 19%;
+    }
+    #btnPos{
+        margin-left: 5.5%;
+        margin-top: -3%;
+        }
+} 

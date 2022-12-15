@@ -1,0 +1,98 @@
+button{
+    margin-top:0.5em;
+    margin-right: 1.5em;
+}
+#main{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 20px;
+    font-size: 3em;
+    
+}
+#tweet{
+    border-radius: 15px;
+    border-top-left-radius: 15px;
+    margin-left: 8%;
+    margin-top: -8%;
+    padding-right: -15em;
+    margin-right: 8%;
+}
+#posteddate{
+    border-radius: 15px;
+    border-top-left-radius: 15px;
+    margin-left: 10%;
+    margin-top: -5%;
+    padding-right: -15em;
+}
+
+#editeddate{
+    border-radius: 15px;
+    border-top-left-radius: 15px;
+    margin-left: 60%;
+    margin-top: -4%;
+    padding-right: -15em;
+}
+
+#otherUser{
+    position: relative;
+    padding-left:95%;
+}
+
+#tweetBtn {
+    margin-left: 10%;
+    margin-top: -7%;
+    margin-right: 8%;
+}
+
+#replyBtn {
+    margin-left: 10%;
+    margin-top: -2%;
+    margin-right: 8%; 
+}
+
+#tweetdates {
+    float: none;
+    padding-bottom: -5em;
+}
+
+#rposteddate{
+    border-radius: 15px;
+    border-top-left-radius: 15px;
+    margin-left: 10%;
+    margin-top: -5%;
+    margin-bottom: 0.4%;
+    padding-right: -15em;
+}
+
+#rediteddate{
+    border-radius: 15px;
+    border-top-left-radius: 15px;
+    margin-left: 60%;
+    margin-top: -4.5%;
+    margin-bottom: 0.1em;
+    padding-right: -15em;
+}
+#profTxt{
+    margin-top: -3.7em;
+    padding-left: 0.88em;
+    color: #fff;
+    
+}
+#profileImage {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    line-height: 150px;
+    margin: 20px 0;
+    float:center;
+}
+#imgmrgn{
+    margin-right: 0em;
+    margin-top: 0em;
+}
+
+span{
+    color: cornflowerblue;
+}

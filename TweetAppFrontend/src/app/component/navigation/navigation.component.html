@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <div class="topnav" *ngIf="!isLoggedIn">
+        <a type="button" class={{btRegister}} (click)="onClickRegister()">Register</a>
+        <a type="button" class={{btLogin}} (click)="onClickLogin()">Login</a>
+        <a type="button" class={{btForgotPassword}} (click)="onClickResetCreds()">Forgot Password?</a>
+        <div class="topnav-right">
+                <a type="button" class="btn btn-warning" (click)="onClickToggleColor()" style="margin-top: 0em;">Toggle Dark Mode</a>
+        </div>
+    </div>
+    <div class="topnav" *ngIf="isLoggedIn">
+        <a type="button" class={{btPostTweet}} (click)="onClickPostTweet()">Post a tweet</a>
+        <a type="button" class={{btViewMyTweet}} (click)="onClickViewMyTweet()">View my tweets</a>
+        <a type="button" class={{btViewAllTweet}} (click)="onClickViewAllTweet()">View All Tweets</a>
+        <a type="button" class={{btViewAllUsers}} (click)="onClickViewAllUsers()">View All Users</a>
+        <a type="button" class={{btResetPassword}} (click)="onClickResetPassword()">Reset Password</a>
+        <div class="topnav-right">
+                <a type="button" class="btn btn-warning" (click)="onClickToggleColor()" style="margin-top: 0em;">Toggle Dark Mode</a>
+                <a type="button" class="btn btn-warning" (click)="onClickLogout()" style="margin-top: 0em;">Logout</a>
+        </div>
+    </div>
+  </div>

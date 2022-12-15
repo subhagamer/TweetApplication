@@ -1,0 +1,11 @@
+#profileImage {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    font-size: 35px;
+    color: #fff;
+    text-align: center;
+    line-height: 150px;
+    margin: 20px 0;
+    float:center;
+  }

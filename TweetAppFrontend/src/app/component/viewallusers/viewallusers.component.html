@@ -1,0 +1,59 @@
+<app-navigation></app-navigation>
+ <section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+            <div class="card-body p-4 p-md-5">
+              <div *ngIf="!isViewingTweetOfUser">
+                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">View all Users</h3>
+                  <div class="flex-container">
+                    <div>
+                      <label for="form1">Search for user(case insensitive): </label>
+                      <input type="search" class="form-control" id="form1" [ngModel]="search.search" value="{{search.search}}" (ngModelChange)="updateEvent($event)" />
+                    </div>
+                    <br>
+                    </div>
+                  <div class="form-outline">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">View their tweets</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let t of allUsers; let i = index ">
+                          <tr>
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{t.name.split(" ")[0]}}</td>
+                            <td>{{t.name.split(" ")[1]}}</td>
+                            <td><span>@{{t.username}}</span></td>
+                            <td><button class="btn btn-success" (click)="viewalltweet(t)">click here</button></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      </div>
+                    </div>
+                    <div *ngIf="isViewingTweetOfUser">
+                      <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Viewing Tweets of User <span>@{{tweets[0].tweetedBy}}</span></h3>
+                      <p *ngIf="tweets.length==0">No Tweets Found</p>
+                      <ng-container class="form-outline" *ngFor="let tw of tweets; let i = index " >
+                        <div id="imgmrgn">
+                          <div id="profileImage" [ngStyle]="{'background-color': tw.profileColor}"></div>
+                          <p id="profTxt">{{tw.initials}}</p>
+                        </div>
+                        <div id="reply" class="d-flex flex-row justify-content-start mb-10 pb-3">
+                          <textarea class="form-control form-control-lg" rows="4" maxlength="50" id="tweet"   *ngIf="!tw.deleted" [ngModel]="tw.tweet" [disabled]="true"></textarea>
+                        </div>
+                      </ng-container>
+                      <button class="btn btn-success" (click)="goBackToAllUsers()">Go Back</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+  </section>

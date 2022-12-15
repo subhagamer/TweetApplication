@@ -1,0 +1,27 @@
+.topnav-right {
+    float: right;
+    margin: 1em;
+  }
+.container-fluid {
+    background-color: #333;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    margin-top: -0.6em;
+    margin-left: -0.5em;
+    margin-right: -0.5em;
+  }
+  /* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    margin-right: 1em;
+    margin-top: 1em;
+    font-size: 17px;
+    padding-left: 0.5em;
+  }
+  .topnav {
+    background-color: #333;
+    overflow: hidden;
+}

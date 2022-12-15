@@ -1,0 +1,76 @@
+<app-navigation></app-navigation>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row justify-content-center align-items-center h-100">
+      <div class="col-12 col-lg-9 col-xl-7">
+        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Forgot Password</h3>
+            <div *ngIf="navigate==0">
+              <form (submit)="searchByUsername()">
+                <div class="form-outline">
+                  <input type="text" id="username" [(ngModel)]="username" name="username"
+                    class="form-control form-control-lg" />
+                  <label class="form-label" for="username">Username</label>
+                </div>
+                <div class="form-outline">
+                  <input class="btn btn-primary btn-sm" type="submit" style="margin-right: 1em; margin-bottom: 1em;"
+                    value="Search" />
+                  <input class="btn btn-secondary btn-sm" style="margin-right: 1em; margin-bottom: 1em;" type="reset"
+                    value="Clear" />
+                  <div class="alert alert-warning" *ngIf="errorMsg!=''">{{errorMsg}}</div>
+                </div>
+              </form>
+            </div>
+            <div *ngIf="navigate==1">
+              <div class="form-outline">
+                <h4>User Details</h4>
+                <div style="display: flex;justify-content: center;">
+                  <div id="profileImage" [ngStyle]="{'background-color': user.profileColor}">
+                    <p style="margin-top: -1.1em;">{{initials}}</p>
+                  </div>
+                </div>
+                <div style="display: flex;justify-content: center;">
+                  <div>
+                    <label>Name :- {{user.firstName}} {{user.lastName}}</label><br>
+                    <label>Email :- {{user.email}}</label>
+                  </div>
+                </div>
+                <form (submit)="resetPassword()">
+                  <div class="form-outline">
+                    <p>If details are correct then proceed to reset password:</p>
+                    <input type="text" id="email" [(ngModel)]="claim.email" name="email"
+                      class="form-control form-control-lg" />
+                    <label class="form-label" for="email">Complete the email {{user.email}} 
+                      <span style="color: red;">{{errorEmail}}</span></label>
+                  </div>
+                  <div class="form-outline">
+                    <input type="password" id="password" [(ngModel)]="claim.password" name="password"
+                      class="form-control form-control-lg" />
+                    <label class="form-label" for="password">New Password</label>
+                  </div>
+                  <div class="form-outline">
+                    <input type="password" id="password" [(ngModel)]="claim.confirmPassword" name="cnfmpassword"
+                      class="form-control form-control-sm" />
+                    <label class="form-label" for="cnfmpassword">Confirm Password  <span style="color: red;">{{errorPass}}</span></label>
+                  </div>
+                  <div class="form-outline">
+                    <input class="btn btn-danger btn-sm" type="submit" style="margin-right: 1em; margin-bottom: 1em;"
+                      value="Proceed to Reset" />
+                    <input class="btn btn-primary btn-sm" style="margin-right: 1em; margin-bottom: 1em;" type="reset"
+                      value="Clear" />
+                    <input class="btn btn-success btn-sm" style="margin-right: 1em; margin-bottom: 1em;" (click)="goBack()"
+                      value="Go Back" />
+                  </div>
+                  <div class={{alert}} role="alert" *ngIf="errorMsg!=''">
+                    {{errorMsg}}
+                  </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

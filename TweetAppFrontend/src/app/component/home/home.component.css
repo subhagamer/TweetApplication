@@ -1,0 +1,11 @@
+
+.d-flex {
+    text-align: center; 
+    background-color: whitesmoke;
+    float: none;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 25em;
+    margin-left: 20%;
+    margin-right: 20%;
+}

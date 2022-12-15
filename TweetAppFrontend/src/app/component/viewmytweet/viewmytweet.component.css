@@ -1,0 +1,92 @@
+button{
+    margin-top:0.5em;
+    margin-right: 1.5em;
+}
+#main{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 20px;
+    font-size: 3em;
+    
+}
+#tweet{
+    border-radius: 15px;
+    border-top-left-radius: 15px;
+    margin-left: 8%;
+    margin-top: -8%;
+    padding-right: -15em;
+}
+
+#profileImage {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    line-height: 150px;
+    margin: 20px 0;
+    float:center;
+}
+    
+#tag
+{
+    color: cornflowerblue;
+}
+
+#profTxt{
+    margin-top: -3.7em;
+    padding-left: 0.88em;
+    color: #fff;
+    user-select: none;
+}
+#imgmrgn{
+    margin-right: -4em;
+    margin-top: -1em;
+}
+#headtxt{
+    margin-top:3em;
+    margin-bottom: -3em;
+    margin-left: 5em;
+}
+#btnPos{
+    margin-left: 2.5%;
+    margin-top: -3%;
+    padding-left: 4em;
+}
+@media (max-width: 1200px) {
+    #imgmrgn{
+        margin-right: -3em;
+    }
+    #headtxt{
+        margin-top:5em;
+        margin-bottom: -4em;
+        margin-left: 5em;
+    }
+    #btnPos{
+    margin-left: 3.5%;
+    margin-top: -3%;
+    }
+}
+@media (max-width: 765px) {
+    #imgmrgn{
+        margin-right: -1.5em;
+        margin-bottom: -0.3em;
+        margin-top: 2.5em;
+    }
+    #headtxt{
+        margin-top:5em;
+        margin-bottom: -5em;
+        margin-left: 19%;
+    }
+    #btnPos{
+        margin-left: 5.5%;
+        margin-top: -3%;
+        }
+} 
+@media (max-width: 450px) {
+    #headtxt{
+        margin-top:5em;
+        margin-bottom: -4.7em;
+        margin-left: 4em;
+    }
+}

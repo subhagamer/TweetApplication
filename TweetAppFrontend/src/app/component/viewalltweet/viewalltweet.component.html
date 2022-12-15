@@ -1,0 +1,143 @@
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <app-navigation></app-navigation>
+   <section class="vh-100 gradient-custom">
+      <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+          <div class="col-12 col-lg-9 col-xl-7">
+            <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+              <div class="card-body p-4 p-md-5">
+                
+                  <div *ngIf="!reply"> 
+                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-5" >View all Tweets</h3>
+                    <ng-container class="form-outline" *ngFor="let t of tweet; let i = index " >                    
+                    <p id="headtxt" *ngIf="t.edited==true"><span id="tag">@{{t.tweetedBy}}</span> posted on {{t.tweetPostDate| date:'dd MMM yy'}}({{t.tweetPostDate| date:'h:mm a'}}) and last edited on {{t.editedDate| date:'dd MMM yy'}}({{t.editedDate| date:'h:mm a'}})</p>
+                    <p style="margin-bottom: -2.5%;margin-top: 1%;" *ngIf="t.edited!=true" id="posteddate"><span id="tag">@{{t.tweetedBy}}</span> posted on {{t.tweetPostDate| date:'dd MMM yy'}}({{t.tweetPostDate| date:'h:mm a'}}) </p> 
+                    <p style="font-weight: bold;text-decoration: underline;">Tweet {{t.tweetId}}</p>
+                      <div class="d-flex flex-row justify-content-start mb-4">
+                      <table class="container">
+                        <tr>
+                          <td>
+                            <div *ngIf="t.tweetedBy==user">
+                              
+                              <div id="imgmrgn">
+                                <div id="profileImage" [ngStyle]="{'background-color': t.profileColor}"></div>
+                                <p id="profTxt">{{t.initials}}</p>
+                              </div>
+                              </div> 
+                            <div *ngIf="t.tweetedBy!=user" style="width: 45px;margin-right: -2em;width: 45px;">
+                            <!-- Left Padding Fix -->
+                            </div>    
+                          </td>
+                          <td>
+                            <div class="d-flex flex-row justify-content-start mb-10 pb-3">
+                            <textarea class="form-control form-control-lg" rows="4" maxlength="50" id="tweet"  [ngModel]="t.tweet" value ={{t.tweet}} (ngModelChange)="updateTitle($event)"  [disabled]="!(t.tweetId==editAllow) || (t.deleted)"></textarea>
+                          </div>
+                          </td>
+                          <td>
+                            <div class="d-flex flex-row justify-content-start mb-4" *ngIf="!(t.tweetedBy==user)" id="otherUser">
+                              <div id="imgmrgnOther">
+                              <div id="profileImageOther" [ngStyle]="{'background-color': t.profileColor}"></div>
+                                <p id="profTxtOther">{{t.initials}}</p>
+                              </div>
+                            </div>
+                            <div *ngIf="t.tweetedBy==user" style="margin-right:1.3em;">
+                            <!-- Right padding fix -->
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    
+                    <div style="margin-left: 10%;margin-top: -3%;padding-left: 0.7em;">
+                      <button *ngIf="t.deleted==false" class="btn btn-primary btn-sm" (click)="replyField(t.tweetId)"><span  class="glyphicon glyphicon-share"> Reply</span></button>
+                      <button class={{isLiked(t.tweetId,t.likedBy)}} *ngIf="t.deleted==false" (click)="likeField(t.tweetId,t.likedBy)"><span  class="glyphicon glyphicon-thumbs-up"> Like <span class="badge badge-light">{{t.likedBy.length}}</span></span></button>
+                      <button class="btn btn-primary btn-sm" *ngIf="!(editAllow==t.tweetId) && (t.tweetedBy==user) && (t.deleted==false)" (click)="editField(t.tweetId)"><span  class="glyphicon glyphicon-pencil"> Edit</span></button>
+                      <button class="btn btn-danger btn-sm"  *ngIf="!(editAllow==t.tweetId) && (t.tweetedBy==user) && (t.deleted==false)" (click)="deleteField(t.tweetId)"><span  class="	glyphicon glyphicon-trash"> Delete</span></button>
+                      <button type="submit" *ngIf="(editAllow==t.tweetId) && (t.tweetedBy==user)" class="btn btn-success btn-sm" [disabled]="!(t.tweetId==editAllow)" (click)="saveTweet(t)"><span  class="glyphicon glyphicon-floppy-disk"> Save</span></button>
+                      <button class="btn btn-danger btn-sm" *ngIf="(editAllow==t.tweetId) && (t.tweetedBy==user)" [disabled]="!(t.tweetId==editAllow)" (click)="cancelEdit()"><span  class="glyphicon glyphicon-remove"> Cancel</span></button>
+                    </div>
+                    <!-- Reply starts here -->
+                    <p style="font-family: aria;text-decoration: underline;text-align: center;padding-right:4em;font-weight: bold;" *ngIf="t.reply.length!=0">Replies </p>
+                    <ng-container class="form-outline" *ngFor="let r of t.reply; let ri = index " style="margin-left: 3em;margin-right: 3em;">
+                      <p style="margin-bottom: -2.5em;margin-top: 1em;margin-left: 8em;" id="editeddate" *ngIf="r.edited==true"><span id="tag">@{{r.tweetedBy}}</span> posted on {{r.tweetPostDate| date:'dd MMM yy'}}({{r.tweetPostDate| date:'h:mm a'}}) and last edited on {{t.editedDate| date:'dd MMM yy'}}({{t.editedDate| date:'h:mm a'}})</p>
+                      <p style="margin-bottom: -2.5em;margin-top: 1em;margin-left: 3em;" *ngIf="r.edited!=true" id="posteddate"><span id="tag">@{{r.tweetedBy}}</span> posted on {{r.tweetPostDate| date:'dd MMM yy'}}({{r.tweetPostDate| date:'h:mm a'}}) </p> 
+                      
+                      <div class="d-flex flex-row justify-content-start mb-8" style="margin-top: 3em;">
+                        <table class="container-sm">
+                        <tr>
+                          <td>
+                            <div *ngIf="r.tweetedBy==user && t.tweetId==r.parentTweetId" style="margin-left: 3em;margin-right: 0em;">
+                              <div id="imgmrgnRply">
+                                <div id="profileImage" [ngStyle]="{'background-color': r.profileColor}"></div>
+                                <p id="profTxt">{{r.initials}}</p>
+                              </div>
+                            </div> 
+                            <div *ngIf="r.tweetedBy!=user" style="width: 45px;margin-left:-0.2em;width: 45px;">
+                              <!-- Left Padding Fix -->
+                            </div>    
+                          </td>
+                          <td>
+                              <textarea class="form-control form-control-lg" rows="4" maxlength="50" id="tweet" *ngIf="t.tweetId==r.parentTweetId"  [ngModel]="r.tweet" value ={{r.tweet}} (ngModelChange)="updateTitle($event)"  [disabled]="!(r.tweetId==editAllow)"></textarea>
+                          </td>
+                          <td>
+                            <div class="d-flex flex-row justify-content-start mb-4" *ngIf="!(r.tweetedBy==user)" id="otherUser">
+                            <div id="imgmrgnRplyOther">
+                              <div id="profileImageOther" [ngStyle]="{'background-color': r.profileColor}"></div>
+                              <p id="profTxtOther">{{r.initials}}</p>
+                            </div>
+                            </div>
+                            <div *ngIf="r.tweetedBy==user && t.tweetId==r.parentTweetId" style="width: 45px;margin-right: 1em;width: 45px;">
+                                <!-- Right padding fix -->
+                            </div>
+                          </td>
+                        </tr>
+                        </table>
+                      </div>
+                      <button *ngIf="r.deleted==false" style="margin-left: 13em;margin-top: 0.1em;" class={{isLiked(r.tweetId,r.likedBy)}} (click)="likeField(r.tweetId,r.likedBy)"><span  class="glyphicon glyphicon-thumbs-up"> Like({{r.likedBy.length}})</span></button>
+                      <button class="btn btn-primary btn-sm" *ngIf="!(editAllow==r.tweetId) && (r.tweetedBy==user) && (r.deleted==false)" (click)="editField(r.tweetId)"><span  class="glyphicon glyphicon-pencil"> Edit</span></button>
+                      <button class="btn btn-danger btn-sm"  *ngIf="!(editAllow==r.tweetId) && (r.tweetedBy==user) && (r.deleted==false)" (click)="deleteField(r.tweetId)"><span  class="	glyphicon glyphicon-trash"> Delete</span></button>
+                      <button type="submit" *ngIf="(editAllow==r.tweetId) && (r.tweetedBy==user)" class="btn btn-success btn-sm" [disabled]="!(r.tweetId==editAllow)" (click)="saveReplyTweet(r)"><span  class="glyphicon glyphicon-floppy-disk"> Save</span></button>
+                      <button class="btn btn-danger btn-sm" *ngIf="(editAllow==r.tweetId) && (r.tweetedBy==user)" [disabled]="!(r.tweetId==editAllow)" (click)="cancelEdit()"><span  class="glyphicon glyphicon-remove"> Cancel</span></button> 
+                      <span *ngIf="r.deleted==false" style="font-family: roboto;padding-left: 1%;">Reply Id:{{r.tweetId}}</span>
+                      <p *ngIf="r.deleted!=false" style="font-family: roboto;margin-left: 10em;">Reply Id:{{r.tweetId}}</p>            
+                    </ng-container>
+                    <br>
+                    <p style="text-align: center;">_________________________________________________________</p>
+                    <br>
+                    </ng-container>
+                  </div>
+
+                  <div *ngIf="reply">
+                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-5" >Add Reply To Tweet</h3>
+                    <form (submit)="onPostTweetReply()">
+                      <div class="form-outline">
+                        <div class="d-flex flex-row justify-content-start mb-4">
+                          <div id="imgmrgn">
+                            <div id="profileImage" [ngStyle]="{'background-color': profileColor}"></div>
+                            <p id="profTxt">{{initials}}</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-start mb-4 pb-2" style="margin-left: 5em;margin-top: -5em;">
+                          <textarea class="form-control form-control-lg" rows="4" maxlength="50" id="tweet"  class="form-control" 
+                          [(ngModel)]="tweetpost.tweet" name="tweet" rows="4"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-outline" style="margin-left: 7em;" >
+                        <input class="btn btn-success btn-sm" type="submit" style="margin-right: 1em; margin-bottom: 1em;" value="Post Reply" />
+                        <input class="btn btn-danger btn-sm" style="margin-right: 1em; margin-bottom: 1em;" type="reset" value="Clear" />
+                        <input class="btn btn-secondary btn-sm" style="margin-right: 1em; margin-bottom: 1em;"(click)="revert()" value="Back" />
+                      </div> 
+                    </form>
+                  </div>
+                    <h4 *ngIf="!(tweet.length!=0)">No Tweets Found</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+                
