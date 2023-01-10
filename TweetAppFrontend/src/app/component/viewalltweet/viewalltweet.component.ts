@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Reply } from 'src/app/model/reply.model';
 import { Tweet } from 'src/app/model/tweet.model';
 import { LoginService } from 'src/app/service/login.service';
-import { TweetService } from 'src/app/service/tweet.service';
+import { data, TweetService } from 'src/app/service/tweet.service';
 
 export class Like {
   result = ''
@@ -32,7 +32,11 @@ export class User {
   styleUrls: ['./viewalltweet.component.css']
 })
 export class ViewalltweetComponent implements OnInit {
-
+  size = 3
+  page = 0
+  replyPageCnt: number[] = [0, 0, 0, 0, 0, 0];
+  totalItem = 0
+  initReplyPage = 0
   like: Like[] = []
   msg: String = ''
   msgtype = ''
@@ -71,13 +75,33 @@ export class ViewalltweetComponent implements OnInit {
     this.loadData();
   }
 
+  setOrUnsetrecentsFirst(){
+    var recents=localStorage.getItem("recentsFirst") || "false";
+    if(recents=="false"){
+      localStorage.setItem("recentsFirst","true")
+    }
+    else{
+      localStorage.setItem("recentsFirst","false")
+    }
+    this.loadData();
+  }
   loadData() {
-    this.tweetService.loadAllTweets().subscribe(data => {
-      // console.log(data)
-      this.tweet = data.sort(sortFunc)
-      this.replyTweet = this.tweet.filter(a => a.parentTweetId > 0);
-      this.tweet = this.tweet.filter(a => a.parentTweetId < 0);
-      // console.log(this.tweet==null)
+    console.log("Loading page" + this.page)
+    this.tweetService.loadAllTweets(this.page, this.size).subscribe(data => {
+      if (data != null) {
+        
+        // console.log(data)
+        this.tweet = (data.tweets)
+        this.totalItem = data.totalItems
+        this.page = data.currentPage
+        this.replyTweet = this.tweet.filter(a => a.parentTweetId > 0);
+        this.tweet = this.tweet.filter(a => a.parentTweetId < 0);
+      }
+      else{
+        this.tweet=[]
+      }
+
+      console.log(this.tweet == null)
     },
       error => {
         // console.log(error.status);
@@ -91,7 +115,7 @@ export class ViewalltweetComponent implements OnInit {
           this.router.navigateByUrl("login")
         }
       });
-      
+
   }
   editField(t: number) {
     this.editAllow = t
@@ -208,6 +232,7 @@ export class ViewalltweetComponent implements OnInit {
     // this.tweetService.
     this.parentTweetId = tweetId;
     this.reply = true
+
   }
   revert() {
     this.reply = false
@@ -239,5 +264,28 @@ export class ViewalltweetComponent implements OnInit {
       });
 
   }
-
+  setPage(n: number) {
+    this.page = this.page + n;
+    this.loadData();
+  }
+  adjustTweetSize(size: number) {
+    this.size = size;
+    this.page = 0
+    // console.log(this.size)
+    this.loadData();
+    console.log(this.page)
+    // console.log(this.totalItem)
+  }
+  replyPage(reply: Reply[], i: number) {
+    this.initReplyPage = this.replyPageCnt[i]
+    reply.sort((item1, item2) => {
+      return (item1.tweetPostDate < item2.tweetPostDate) ? 1 : -1;
+    });
+    return reply.slice(this.initReplyPage, this.initReplyPage + 2)
+  }
+  setReplyPage(n: number, i: number) {
+    this.replyPageCnt[i] = this.replyPageCnt[i] + n;
+    // this.initReplyPage=this.initReplyPage+n;
+    this.loadData();
+  }
 }

@@ -18,14 +18,22 @@ export class NavigationComponent implements OnInit {
   btViewAllTweet="btn btn-primary"
   btViewAllUsers="btn btn-primary"
   btResetPassword="btn btn-primary"
-
+  btHome="btn btn-primary"
   isLoggedIn=false
+  stillLoggedin=false
   ngOnInit(): void {
     this.isLoggedIn=false
     let token=localStorage.getItem("token")
     if(token!=null&& token!='')
     this.navigationService.isValidToken(token).subscribe(data=>{
-      this.isLoggedIn=true},
+      this.isLoggedIn=true
+      const path=this.router.url
+      console.log(path)
+      if(path=='/'||path=='/register'||path=='/login'||path=='/forgotpass'){
+        this.isLoggedIn=false
+        this.stillLoggedin=true
+      }
+    },
       error=>{
         this.isLoggedIn=false
       })
@@ -36,16 +44,25 @@ export class NavigationComponent implements OnInit {
       this.btRegister="btn btn-secondary"
       this.btLogin="btn btn-primary"
       this.btForgotPassword="btn btn-primary"
+      this.btHome="btn btn-primary"
     }
     else if(path.includes('/login')){
       this.btRegister="btn btn-primary"
       this.btLogin="btn btn-secondary"
       this.btForgotPassword="btn btn-primary"
+      this.btHome="btn btn-primary"
     }
     else if(path.includes('/forgotpass')){
       this.btRegister="btn btn-primary"
       this.btLogin="btn btn-primary"
       this.btForgotPassword="btn btn-secondary"
+      this.btHome="btn btn-primary"
+    }
+    else if(path=='/'){
+      this.btRegister="btn btn-primary"
+      this.btLogin="btn btn-primary"
+      this.btForgotPassword="btn btn-primary"
+      this.btHome="btn btn-secondary"
     }
     else if(path.includes('/postatweet')){
       this.btPostTweet="btn btn-secondary"
@@ -82,10 +99,12 @@ export class NavigationComponent implements OnInit {
       this.btViewAllUsers="btn btn-primary"
       this.btResetPassword="btn btn-secondary"
     }
-
   }
    onClickRegister(){
     this.router.navigate(['register']);
+  }
+  onClickHome(){
+    this.router.navigate(['/']);
   }
   onClickLogin(){
     this.router.navigate(['login']);
@@ -94,10 +113,15 @@ export class NavigationComponent implements OnInit {
     this.router.navigate(['forgotpass']);
   }
   onClickToggleColor(){
-    if(localStorage.getItem('pageBgColor') == 'linear-gradient(90deg, rgba(252,176,69,1) 0%, rgba(253,29,29,1) 50%, rgba(131,58,180,1) 88%)')
+    if(localStorage.getItem('pageBgColor') == 'linear-gradient(90deg, rgba(252,176,69,1) 0%, rgba(253,29,29,1) 50%, rgba(131,58,180,1) 88%)'){
       localStorage.setItem('pageBgColor','linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,121,1) 49%, rgba(0,212,255,1) 100%)');
-    else
-      localStorage.setItem('pageBgColor','linear-gradient(90deg, rgba(252,176,69,1) 0%, rgba(253,29,29,1) 50%, rgba(131,58,180,1) 88%)');
+      localStorage.setItem('btnColor','');
+    }
+      else{
+        localStorage.setItem('pageBgColor','linear-gradient(90deg, rgba(252,176,69,1) 0%, rgba(253,29,29,1) 50%, rgba(131,58,180,1) 88%)');
+        localStorage.setItem('btnColor','');
+      }
+      
     window.location.reload()
   }
   onClickPostTweet(){

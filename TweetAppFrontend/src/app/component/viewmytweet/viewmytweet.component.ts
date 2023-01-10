@@ -27,7 +27,10 @@ export class ViewmytweetComponent implements OnInit {
   tweetModify=''
   initials=""
   profileColor=""
+  totalItem=0
   saved=false
+  page=0
+  size=3
   constructor(private elementRef: ElementRef,private formBuilder: FormBuilder,
     private tweetService:TweetService,private router:Router) { }
     editAllow=-1
@@ -44,12 +47,15 @@ export class ViewmytweetComponent implements OnInit {
       this.loadData();
   }
   loadData(){
-    this.tweetService.loadMyTweets().subscribe(data=>{
-      console.log(data)
-        this.tweet=data.sort(sortFn)
+    this.tweetService.loadMyTweets(this.page,this.size).subscribe(data=>{
+        if(data!=null){
+        console.log(data)
+        this.tweet=data.tweets.sort(sortFn)
+        this.totalItem=data.totalItems
+        this.page=data.currentPage
         this.tweet=this.tweet.filter(a=>a.deleted!=true)
         console.log(this.tweet==null)
-
+        }
     },
     error=>{
       console.log(error.status);
@@ -118,5 +124,17 @@ export class ViewmytweetComponent implements OnInit {
     if(t.edited){
       prepare=prepare+' and last edited on '+t.editedDate
     }
+  }
+  setPage(n:number){
+    this.page=this.page+n
+    this.loadData()
+  }
+  adjustTweetSize(size:number){
+    this.size=size;
+    this.page=0
+    // console.log(this.size)
+    this.loadData();
+    console.log(this.page)
+    // console.log(this.totalItem)
   }
 }

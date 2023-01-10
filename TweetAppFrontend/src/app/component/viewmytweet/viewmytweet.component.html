@@ -19,8 +19,10 @@
                   {{t.editedDate| date:'dd MMM yy'}}({{t.editedDate| date:'h:mm a'}})</p>
                 <p id="headtxt" *ngIf="t.edited!=true"><span id="tag">@{{t.tweetedBy}}</span> posted on
                   {{t.tweetPostDate| date:'dd MMM yy'}}({{t.tweetPostDate| date:'h:mm a'}}) </p>
-                <p style="font-weight: bold;text-decoration: underline;" *ngIf="t.parentTweetId==-1">Tweet {{t.tweetId}}</p>
-                <p style="font-weight: bold;text-decoration: underline;" *ngIf="t.parentTweetId!=-1">Tweet Reply {{t.tweetId}}</p>
+                <p style="font-weight: bold;text-decoration: underline;" *ngIf="t.parentTweetId==-1">Tweet {{t.tweetId}}
+                </p>
+                <p style="font-weight: bold;text-decoration: underline;" *ngIf="t.parentTweetId!=-1">Tweet Reply
+                  {{t.tweetId}}</p>
                 <div class="d-flex flex-row justify-content-start mb-4">
                   <table class="container">
                     <tr>
@@ -59,6 +61,40 @@
                       class="glyphicon glyphicon-remove"> Cancel</span></button>
                 </div>
               </ng-container>
+              <div class="d-flex justify-content-center">
+                <nav>
+                  <ul class="pagination justify-content-end">
+                    <li>
+                      <div>
+                        <span style="font-size: small;">Tweets/page</span><select class="form-select form-select-sm"
+                          [(ngModel)]="size" (ngModelChange)="adjustTweetSize($event)">
+                          <option value="2">Two</option>
+                          <option selected value="3">Three(Default)</option>
+                          <option value="4">Four</option>
+                          <option value="5">Five</option>
+                          <option value="6">Six</option>
+                        </select>
+                      </div>
+                    </li>
+                    <li class="page-item disabled" *ngIf="(page+1)<=2">
+                      <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item" *ngIf="(page+1)>2">
+                      <a class="page-link" (click)="setPage(-2)">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" (click)="setPage(-1)" *ngIf="page>0">{{page}}</a></li>
+                    <li class="page-item active"><a class="page-link" (click)="setPage(0)">{{page+1}}</a></li>
+                    <li class="page-item"><a class="page-link" *ngIf="(page+1)*size<totalItem"
+                        (click)="setPage(1)">{{page+2}}</a></li>
+                    <li class="page-item" *ngIf="(page+1)*size<totalItem-2">
+                      <a class="page-link" (click)="setPage(2)">Next</a>
+                    </li>
+                    <li class="page-item disabled" *ngIf="(page+1)*size>=totalItem-2">
+                      <a class="page-link">Next</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
             </div>
             <h4 *ngIf="(tweet==null ||tweet.length==0)">No Tweets Found</h4>
           </div>

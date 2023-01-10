@@ -68,17 +68,30 @@
   
                   </div>
                 </div>
-  
                 <div class="row">
-                  <div class="col-12">
-                    <label for="usertype">Register As</label>
-                    <select class="form-select" formControlName="usertype" >
+                  <div class="col-md-6 mb-4 pb-2">
+                    <div class="form-outline">
+                      <select class="form-select" formControlName="profileColor" >
+                        <option value="red">Red</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="purple">Purple</option>
+                        <option value="black">Black</option>
+                      </select>
+                      <label for="profileColor">Profile Icon Color</label>
+                    </div>                  
+                  </div>
+                  <div class="col-md-6 mb-4 pb-2">
+                    <div class="form-outline">
+                      <select class="form-select" formControlName="color" >
                         <option value="user">User</option>
                         <option value="admin">Admin</option>
-                    </select>                  
+                    </select> 
+                    <label for="color">Register As</label>
+                    </div>
                   </div>
                 </div>
-  
+
                 <div class="mt-4 pt-2">
                   <input class="btn btn-primary btn-sm" type="submit" value="Submit" />
                   <div class={{msgType}} role="alert" *ngIf="msg!=''">

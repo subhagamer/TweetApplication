@@ -4,6 +4,14 @@ import { Like } from '../component/viewalltweet/viewalltweet.component';
 import { Tweet } from '../model/tweet.model';
 import { User } from '../model/user.model';
 
+export class data
+{
+  currentPage=0;
+  totalItems=0;
+  tweets:Tweet[]=[];
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,9 +38,9 @@ export class TweetService {
     return this.http.post<Response>(genUrl,post,options,);
 
   }
-  loadMyTweets() {
+  loadMyTweets(page:number,size:number) {
     var token=localStorage.getItem("token")
-    var username=''
+    var username='' 
     var auth=''
     if(token!=null){
       // console.log(token)
@@ -40,10 +48,10 @@ export class TweetService {
       console.log(username)
       auth='Bearer '+token
     }
-    var genUrl=this.url+"/api/v1.0/tweets/"+username
+    var genUrl=this.url+"/api/v1.0/tweets/"+username+"?page="+page+"&size="+size
     var header=new HttpHeaders({'Authorization':auth})
     let options = { headers: header };
-    return this.http.get<Tweet[]>(genUrl,options);
+    return this.http.get<data>(genUrl,options);
   }
   deleteTweet(id: number) {
     var token=localStorage.getItem("token")
@@ -75,7 +83,7 @@ export class TweetService {
     var genUrl=this.url+"/api/v1.0/tweets/"+username+"/update/"+tweetId;
     return this.http.put<Tweet>(genUrl,tweet, options);
   }
-  loadAllTweets() {
+  loadAllTweets(page:number,size:number) {
     var token=localStorage.getItem("token")
     var auth=''
     if(token!=null){
@@ -84,10 +92,11 @@ export class TweetService {
       // console.log(this.username)
       auth='Bearer '+token
     }
-    var genUrl=this.url+"/api/v1.0/tweets/all"
+    var recentsFirst=localStorage.getItem("recentsFirst") || "false"
+    var genUrl=this.url+"/api/v1.0/tweets/all?page="+page+"&size="+size+"&recentsFirst="+recentsFirst
     var header=new HttpHeaders({'Authorization':auth})
     let options = { headers: header };
-    return this.http.get<Tweet[]>(genUrl,options);
+    return this.http.get<data>(genUrl,options);
   }
   likeField(tweetId: number) {
     var token=localStorage.getItem("token")
@@ -118,7 +127,7 @@ export class TweetService {
     // console.log(genUrl)
     return this.http.get<User[]>(genUrl, options);
   }
-  viewAllUserTweet(t: User) {
+  viewAllUserTweet(t: User,page:number,size:number) {
     var genUrl=this.url+"/api/v1.0/tweets/users/all"
     var token=localStorage.getItem("token")
     var auth=''
@@ -127,8 +136,8 @@ export class TweetService {
     }
     var header=new HttpHeaders({'Authorization':auth})
     let options = { headers: header};
-    genUrl=this.url+'/api/v1.0/tweets/'+t.username
-    return this.http.get<Tweet[]>(genUrl, options);
+    genUrl=this.url+'/api/v1.0/tweets/'+t.username+"?page="+page+"&size="+size
+    return this.http.get<data>(genUrl, options);
   }
 
 }

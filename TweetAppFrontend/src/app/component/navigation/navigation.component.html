@@ -1,10 +1,14 @@
 <div class="container-fluid">
-    <div class="topnav" *ngIf="!isLoggedIn">
+    <div class="topnav" *ngIf="!isLoggedIn" style="margin-bottom: 0.5em;">
+        <a type="button" class={{btHome}} (click)="onClickHome()">Home</a>
         <a type="button" class={{btRegister}} (click)="onClickRegister()">Register</a>
         <a type="button" class={{btLogin}} (click)="onClickLogin()">Login</a>
         <a type="button" class={{btForgotPassword}} (click)="onClickResetCreds()">Forgot Password?</a>
         <div class="topnav-right">
-                <a type="button" class="btn btn-warning" (click)="onClickToggleColor()" style="margin-top: 0em;">Toggle Dark Mode</a>
+                <div style="margin-top: -1.6em;" >
+                    <a type="button" class="glyphicon glyphicon-adjust" (click)="onClickToggleColor()" style="font-size: 30px;">
+                    </a>
+                </div>
         </div>
     </div>
     <div class="topnav" *ngIf="isLoggedIn">
@@ -14,8 +18,13 @@
         <a type="button" class={{btViewAllUsers}} (click)="onClickViewAllUsers()">View All Users</a>
         <a type="button" class={{btResetPassword}} (click)="onClickResetPassword()">Reset Password</a>
         <div class="topnav-right">
-                <a type="button" class="btn btn-warning" (click)="onClickToggleColor()" style="margin-top: 0em;">Toggle Dark Mode</a>
-                <a type="button" class="btn btn-warning" (click)="onClickLogout()" style="margin-top: 0em;">Logout</a>
+            <div class="topnav-right">
+                <div style="margin-top: -2.8em;" >
+                    <a type="button" class="glyphicon glyphicon-adjust" (click)="onClickToggleColor()" style="font-size: 30px;">
+                    </a>
+                </div>
+        </div>
+                <a type="button" class="btn btn-warning" (click)="onClickLogout()" style="margin-top: 0.1em;">Logout</a>
         </div>
     </div>
   </div>

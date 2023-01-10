@@ -17,6 +17,10 @@ import { ViewalltweetComponent } from './component/viewalltweet/viewalltweet.com
 import { ViewallusersComponent } from './component/viewallusers/viewallusers.component';
 import { ResetpasswordComponent } from './component/resetpassword/resetpassword.component';
 import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +40,10 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
+    CommonModule, 
+    FormsModule, 
+    MatSelectModule,
+    MatFormFieldModule,
     HttpClientModule,
     FormsModule
   ],

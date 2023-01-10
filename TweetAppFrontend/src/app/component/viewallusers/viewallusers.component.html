@@ -1,59 +1,132 @@
 <app-navigation></app-navigation>
- <section class="vh-100 gradient-custom">
-    <div class="container py-5 h-100">
-      <div class="row justify-content-center align-items-center h-100">
-        <div class="col-12 col-lg-9 col-xl-7">
-          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-            <div class="card-body p-4 p-md-5">
-              <div *ngIf="!isViewingTweetOfUser">
-                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">View all Users</h3>
-                  <div class="flex-container">
-                    <div>
-                      <label for="form1">Search for user(case insensitive): </label>
-                      <input type="search" class="form-control" id="form1" [ngModel]="search.search" value="{{search.search}}" (ngModelChange)="updateEvent($event)" />
-                    </div>
-                    <br>
-                    </div>
-                  <div class="form-outline">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">View their tweets</th>
-                          </tr>
-                        </thead>
-                        <tbody *ngFor="let t of allUsers; let i = index ">
-                          <tr>
-                            <th scope="row">{{i+1}}</th>
-                            <td>{{t.name.split(" ")[0]}}</td>
-                            <td>{{t.name.split(" ")[1]}}</td>
-                            <td><span>@{{t.username}}</span></td>
-                            <td><button class="btn btn-success" (click)="viewalltweet(t)">click here</button></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      </div>
-                    </div>
-                    <div *ngIf="isViewingTweetOfUser">
-                      <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Viewing Tweets of User <span>@{{tweets[0].tweetedBy}}</span></h3>
-                      <p *ngIf="tweets.length==0">No Tweets Found</p>
-                      <ng-container class="form-outline" *ngFor="let tw of tweets; let i = index " >
-                        <div id="imgmrgn">
-                          <div id="profileImage" [ngStyle]="{'background-color': tw.profileColor}"></div>
-                          <p id="profTxt">{{tw.initials}}</p>
-                        </div>
-                        <div id="reply" class="d-flex flex-row justify-content-start mb-10 pb-3">
-                          <textarea class="form-control form-control-lg" rows="4" maxlength="50" id="tweet"   *ngIf="!tw.deleted" [ngModel]="tw.tweet" [disabled]="true"></textarea>
-                        </div>
-                      </ng-container>
-                      <button class="btn btn-success" (click)="goBackToAllUsers()">Go Back</button>
-                    </div>
-                    </div>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row justify-content-center align-items-center h-100">
+      <div class="col-12 col-lg-9 col-xl-7">
+        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+          <div class="card-body p-4 p-md-5">
+            <div *ngIf="!isViewingTweetOfUser">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">View all Users</h3>
+              <div class="flex-container">
+                <div>
+                  <label for="form1">Search for user through username(case insensitive): </label>
+                  <input type="search" class="form-control" id="form1" [ngModel]="search.search"
+                    value="{{search.search}}" (ngModelChange)="updateEvent($event)" />
                 </div>
+                <br>
+              </div>
+              <div class="form-outline">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">First Name</th>
+                      <th scope="col">Last Name</th>
+                      <th scope="col">Username</th>
+                      <th scope="col">View their tweets</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let t of allUsers; let i = index ">
+                    <tr>
+                      <th scope="row">{{i+1}}</th>
+                      <td>{{t.name.split(" ")[0]}}</td>
+                      <td>{{t.name.split(" ")[1]}}</td>
+                      <td><span>@{{t.username}}</span></td>
+                      <td><button class="btn btn-success" (click)="viewalltweet(t)">click here</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="d-flex justify-content-center">
+                  <nav>
+                    <ul class="pagination justify-content-end">
+                      <li>
+                        <div>
+                          <span style="font-size: small;">Tweets/page</span><select class="form-select form-select-sm"
+                            [(ngModel)]="userPageSize" (ngModelChange)="adjustPageSize($event)">
+                            <option value="2">Two</option>
+                            <option selected value="3">Three(Default)</option>
+                            <option value="4">Four</option>
+                            <option value="5">Five</option>
+                            <option value="6">Six</option>
+                          </select>
+                        </div>
+                      </li>
+                      <li class="page-item disabled" *ngIf="(userPage+1)<=2">
+                        <a class="page-link">Previous</a>
+                      </li>
+                      <li class="page-item" *ngIf="(userPage+1)>2">
+                        <a class="page-link" (click)="setPage(-2)">Previous</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" (click)="setPage(-1)"
+                          *ngIf="userPage>0">{{userPage}}</a></li>
+                      <li class="page-item active"><a class="page-link" (click)="setPage(0)">{{userPage+1}}</a></li>
+                      <li class="page-item"><a class="page-link" *ngIf="(userPage+1)*userPageSize<totalItem"
+                          (click)="setPage(1)">{{userPage+2}}</a></li>
+                      <li class="page-item" *ngIf="(userPage+1)*userPageSize<totalItem-2">
+                        <a class="page-link" (click)="setPage(2)">Next</a>
+                      </li>
+                      <li class="page-item disabled" *ngIf="(userPage+1)*userPageSize>=totalItem-2">
+                        <a class="page-link">Next</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="isViewingTweetOfUser">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5" *ngIf="tweets.length!=0">Viewing Tweets of User <span>@{{tweets[0].tweetedBy}}</span></h3>
+              <p *ngIf="tweets.length==0">No Tweets Found</p>
+              <ng-container class="form-outline" *ngFor="let tw of tweets; let i = index ">
+                <div id="imgmrgn">
+                  <div id="profileImage" [ngStyle]="{'background-color': tw.profileColor}"></div>
+                  <p id="profTxt">{{tw.initials}}</p>
+                </div>
+                <div id="reply" class="d-flex flex-row justify-content-start mb-10 pb-3">
+                  <textarea class="form-control form-control-lg" rows="4" maxlength="50" id="tweet" *ngIf="!tw.deleted"
+                    [ngModel]="tw.tweet" [disabled]="true"></textarea>
+                </div>
+              </ng-container>
+              <div class="d-flex justify-content-center" *ngIf="tweets.length!=0">
+                <nav>
+                  <ul class="pagination justify-content-end">
+                    <li>
+                      <div>
+                        <span style="font-size: small;">Tweets/page</span><select class="form-select form-select-sm"
+                          [(ngModel)]="pageSizeTweet" (ngModelChange)="adjustTweetPageSize($event)">
+                          <option value="2">Two</option>
+                          <option selected value="3">Three(Default)</option>
+                          <option value="4">Four</option>
+                          <option value="5">Five</option>
+                          <option value="6">Six</option>
+                        </select>
+                      </div>
+                    </li>
+                    <li class="page-item disabled" *ngIf="(currentPageTweet+1)<=2">
+                      <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item" *ngIf="(currentPageTweet+1)>2">
+                      <a class="page-link" (click)="setTweetPage(-2)">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" (click)="setTweetPage(-1)"
+                        *ngIf="currentPageTweet>0">{{currentPageTweet}}</a></li>
+                    <li class="page-item active"><a class="page-link"
+                        (click)="setTweetPage(0)">{{currentPageTweet+1}}</a></li>
+                    <li class="page-item"><a class="page-link" *ngIf="(currentPageTweet+1)*pageSizeTweet<totalTweets"
+                        (click)="setTweetPage(1)">{{currentPageTweet+2}}</a></li>
+                    <li class="page-item" *ngIf="(currentPageTweet+1)*pageSizeTweet<totalTweets-2">
+                      <a class="page-link" (click)="setTweetPage(2)">Next</a>
+                    </li>
+                    <li class="page-item disabled" *ngIf="(currentPageTweet+1)*pageSizeTweet>=totalTweets-2">
+                      <a class="page-link">Next</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <button class="btn btn-success" (click)="goBackToAllUsers()">Go Back</button>
             </div>
           </div>
         </div>
-  </section>
+      </div>
+    </div>
+  </div>
+</section>

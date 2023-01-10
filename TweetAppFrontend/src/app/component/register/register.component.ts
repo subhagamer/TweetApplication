@@ -17,7 +17,8 @@ export class RegisterComponent implements OnInit {
     gender:'female',
     username: '',
     password:'',
-    email:''
+    email:'',
+    profileColor:''
   });
 
   emailErrMsg='';
